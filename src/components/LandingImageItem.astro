@@ -1,0 +1,150 @@
+---
+const { data } = Astro.props;
+import { Image } from 'astro:assets';
+---
+
+<a href={`/${data.url}`} class:list={[`${data.col}`, 'imgcontainer']}>
+  <Image src={data.cover} alt={data.title} width={700} height={700} />
+</a>
+<div class="textcontainer">
+  <a href={data.url} class="title">{data.title}</a>
+  <small class="location">{data.location}</small>
+</div>
+
+<style>
+  .textcontainer {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+    padding: 0.3rem 0 1rem 0;
+    @media (width > 480px) {
+      display: none;
+    }
+  }
+  .imgcontainer {
+    margin: 0;
+    overflow: hidden;
+    display: inline-flex;
+    transition: 0.2s ease-in;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  .imgcontainer:hover {
+    border-radius: 0.3rem;
+  }
+  .imgcontainer img {
+    transform: scale(1.03);
+    transition: transform 0.2s ease-in;
+  }
+  .imgcontainer:hover img {
+    transform: scale(1);
+  }
+  @media (width > 48rem) {
+    .col-1 {
+      grid-column: span 6;
+      grid-row: span 4;
+      /* grid-row: span 4; */
+    }
+
+    .col-2 {
+      grid-column: span 3;
+      grid-row: span 4;
+      /* grid-row: span 6; */
+    }
+
+    .col-3 {
+      grid-column: span 4;
+      grid-row: span 5;
+      /* grid-row: 1 / 3; */
+    }
+
+    .col-4 {
+      grid-column: span 4;
+      grid-row: span 6;
+    }
+
+    .col-5 {
+      grid-column: span 8;
+      grid-row: span 5;
+    }
+
+    .col-6 {
+      grid-column: span 7;
+      grid-row: span 4;
+    }
+
+    .col-7 {
+      grid-column: span 5;
+      grid-row: span 5;
+    }
+
+    .col-8 {
+      grid-column: span 5;
+      grid-row: span 4;
+    }
+
+    .col-9 {
+      grid-column: span 7;
+      grid-row: span 6;
+    }
+
+    .col-10 {
+      grid-column: span 3;
+      grid-row: span 3;
+    }
+
+    .col-11 {
+      grid-column: span 2;
+      grid-row: span 3;
+    }
+
+    .col-12 {
+      grid-column: span 5;
+      grid-row: span 6;
+    }
+
+    .col-13 {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    .col-14 {
+      grid-column: span 7;
+      grid-row: span 5;
+    }
+
+    .col-15 {
+      grid-column: span 5;
+      grid-row: span 3;
+    }
+
+    .col-16 {
+      grid-column: span 3;
+      grid-row: span 1;
+    }
+
+    .col-17 {
+      grid-column: span 4;
+      grid-row: span 2;
+    }
+
+    .col-18 {
+      grid-column: span 8;
+      grid-row: span 4;
+    }
+
+    .col-19 {
+      grid-column: span 6;
+      grid-row: span 3;
+    }
+
+    .col-20 {
+      grid-column: span 5;
+      grid-row: span 3;
+    }
+
+    .col-21 {
+      grid-column: span 4;
+      grid-row: span 3;
+    }
+  }
+</style>

@@ -1,0 +1,175 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { projects } from '../data/data';
+import Nav from '../components/Nav.astro';
+import { Image } from 'astro:assets';
+
+export function getStaticPaths() {
+  return projects.map((item) => {
+    return {
+      params: { project: item.url },
+    };
+  });
+}
+
+const getNextPage = (e) => {
+  const nextPage = projects.find((item) => item.id === e + 1);
+  return nextPage.url;
+};
+const getPreviousPage = (e) => {
+  const previousPage = projects.find((item) => item.id === e - 1);
+  return previousPage.url;
+};
+
+const disableBtn = (e) => {
+  const currentPage = projects.find((item) => item.id === e);
+};
+
+type Project = {
+  id: number;
+  url: string;
+  title: string;
+  col: string;
+  svgvalue: number;
+  fw: string;
+  cover: string;
+  hdimg: string;
+  location: string;
+  date: string;
+  shot: string;
+  text: string[];
+};
+
+const { project } = Astro.params;
+
+const data: Project = projects.find((i) => i.url === project);
+---
+
+<Layout title={data.title}>
+  <div class={'page'}>
+    <Nav />
+    <div class={'imgContainer'}>
+      {data.id !== 1 && <a class={'backbtn'} href={getPreviousPage(data.id)} />}
+      {
+        data.id < projects.length - 1 && (
+          <a class={'nextbtn'} href={getNextPage(data.id)} />
+        )
+      }
+      <Image
+        class={'img'}
+        src={data.hdimg}
+        alt={data.title}
+        width={2000}
+        height={1200}
+      />
+    </div>
+    <section class={'pageTitle'}>
+      <h1 class={'title'}>{data.title}</h1>
+    </section>
+    <section class={'pageData'}>
+      <h1 class={'titlexl'}>{data.title}</h1>
+      <p>{data.location}</p>
+      <p>{data.date}</p>
+      <p>{data.shot}</p>
+    </section>
+    <section class={'pageDescription'}>
+      {data.text.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .page {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-areas:
+      'nav'
+      'imgcontainer'
+      'title'
+      'data'
+      'description';
+    @media (width > 48rem) {
+      padding: 1rem 0;
+      grid-template-columns: 14rem auto;
+      grid-template-areas:
+        'nav imgcontainer'
+        'nav title'
+        'nav data'
+        'nav description';
+    }
+    @media (width > 80rem) {
+      max-height: calc(100vh - 2rem);
+      grid-template-columns: 14rem auto 14rem;
+      grid-template-rows: repeat(2, 1fr);
+      grid-template-areas:
+        'nav imgcontainer description'
+        'data imgcontainer description ';
+    }
+  }
+
+  .imgContainer {
+    grid-area: imgcontainer;
+    height: 100%;
+    position: relative;
+  }
+  .img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .pageTitle {
+    grid-area: title;
+    line-height: 1.5;
+    @media (width > 80rem) {
+      display: none;
+    }
+  }
+  .pageData {
+    grid-area: data;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin: 0 0 1rem 0;
+    @media (width > 80rem) {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: end;
+      text-align: right;
+      padding-right: 1rem;
+    }
+  }
+  .pageDescription {
+    grid-area: description;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 1.2rem;
+    line-height: 1.4;
+  }
+
+  .backbtn,
+  .nextbtn {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    z-index: 10;
+  }
+
+  .backbtn {
+    left: 0;
+  }
+
+  .nextbtn {
+    left: 50%;
+  }
+
+  @media (width < 80rem) {
+    .titlexl {
+      display: none;
+    }
+  }
+</style>

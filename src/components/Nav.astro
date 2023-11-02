@@ -1,0 +1,31 @@
+---
+import type { Image } from 'astro:assets';
+import { navigation } from '../data/navlinks.ts';
+---
+
+<header class="navarea">
+  <h2 class="text-center md:text-right">Gabriel Asdrúbal</h2>
+  <nav class="nav flex md:flex-col md:text-right">
+    {navigation.slice(0, 2).map((item) => <a href={item.url}>{item.title}</a>)}
+    {
+      navigation
+        .slice(2, navigation.length)
+        .map((item) => <a href={item.url}>{item.title}</a>)
+    }
+  </nav>
+</header>
+
+<style>
+  header {
+    padding: 2rem;
+  }
+  .navarea {
+    grid-area: nav;
+  }
+  .nav {
+    justify-content: center;
+    display: flex;
+    gap: 1rem;
+    text-transform: capitalize;
+  }
+</style>

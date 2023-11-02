@@ -1,0 +1,52 @@
+---
+import LandingImageItem from '../components/LandingImageItem.astro';
+import Nav from '../components/Nav.astro';
+import { projects } from '../data/data';
+import Layout from '../layouts/Layout.astro';
+const getData = () => {
+  const data = projects;
+
+  if (data) {
+    return data;
+  }
+};
+const data = getData();
+---
+
+<Layout title="Gabriel Asdrúbal fotos">
+  <div class={'wrapper'}>
+    <Nav />
+    <main class={'landingGallery'}>
+      {
+        data?.map((item) => (
+          <LandingImageItem data={item} />
+          // <LandingImageItem key={item.id} data={item} />
+        ))
+      }
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-areas:
+      'nav'
+      'content';
+    @media (width > 480px) {
+      grid-template-columns: 14rem auto 14rem;
+      grid-template-areas: 'nav content .';
+    }
+  }
+
+  .landingGallery {
+    grid-area: content;
+    @media (width > 480px) {
+      display: grid;
+      gap: 0.5rem;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-flow: dense;
+    }
+  }
+</style>
